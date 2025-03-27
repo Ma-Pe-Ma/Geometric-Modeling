@@ -4,6 +4,7 @@ extends Line2D
 @export var weightPanel : Panel;
 @export var buttonGroup : ButtonGroup;
 @export var resetButton : Button;
+@export var lengthLabel : Label;
 
 var dragged : Node2D = null
 var weightContainer : VBoxContainer;
@@ -20,6 +21,8 @@ func _ready():
 	
 	# clear points
 	self.resetButton.pressed.connect(func ():
+		lengthLabel.text = "Length: %.2f" % 0
+		
 		for child in get_children():
 			child.queue_free()
 
@@ -78,21 +81,30 @@ func _unhandled_input(event : InputEvent) -> void:
 
 func drawCurrentCurve() -> void:	
 	if get_children().size() < 2:
+		lengthLabel.text = "Length: %.2f" % 0
 		return
 		
 	self.clear_points()
 		
-	var points : Array[Vector2] = []	
+	var controlPoints : Array[Vector2] = []	
 	for child in get_children() as Array[Node2D]:
-		points.push_back(child.position)
+		controlPoints.push_back(child.position)
 	
-	var currentCurve : AbstractCurveGenerator = (self.curveTypes[self.curveType].new(points) as AbstractCurveGenerator)
+	var currentCurve : AbstractCurveGenerator = (self.curveTypes[self.curveType].new(controlPoints) as AbstractCurveGenerator)
 	self.weights = self.getWeights()
 	currentCurve.setWeights(self.weights)
 	self.drawablePoints = currentCurve.generateDrawablePoints()
+	
+	var length : float = 0
+	
+	if self.drawablePoints.size() > 0:	
+		self.add_point(self.drawablePoints[0])
+		
+		for index in range(1, self.drawablePoints.size()):
+			length += (drawablePoints[index] - drawablePoints[index -1]).length()		
+			self.add_point(drawablePoints[index])
 
-	for drawablePoint in self.drawablePoints:
-		self.add_point(drawablePoint)
+	lengthLabel.text = "Length: %.2f" % length
 
 func getWeights() -> Array[float]:
 	var weights : Array[float] = []

@@ -4,9 +4,10 @@ func _init(points : Array[Vector2]):
 	super(points)
 
 func generateDrawablePoints(divisionNumber : int = 50) -> Array[Vector2]:
-	generateParameterList()
+	if points.size() < order:
+		return []
 	
-	var newDrawablePoints : Array[Vector2] = []
+	generateParameterList()
 	
 	var normalisedBaseCache : Array[float] = [];
 	normalisedBaseCache.resize((divisionNumber + 1) * points.size());
@@ -14,14 +15,17 @@ func generateDrawablePoints(divisionNumber : int = 50) -> Array[Vector2]:
 	var normalisedBaseDenominatorCache : Array[float] = [];
 	normalisedBaseDenominatorCache.resize(divisionNumber + 1)
 	normalisedBaseDenominatorCache.fill(0.0)
-	print("---")
+
 	for u_i in range(divisionNumber + 1):
-		var u : float = parameterList[order - 1] + float(u_i) * (parameterList[points.size() + 1] - parameterList[order - 1]) / divisionNumber		
+		var step : float = (parameterList[points.size()] - parameterList[order - 1]) / divisionNumber
+		var u : float = parameterList[order - 1] + float(u_i) * step
 		
 		for index in range(points.size()):
 			var cacheIndex : int = u_i * points.size() + index
 			normalisedBaseCache[cacheIndex] = weights[index] * generateNormalizedBSplineFunction(index, order, u)
 			normalisedBaseDenominatorCache[u_i] += normalisedBaseCache[cacheIndex]
+	
+	var newDrawablePoints : Array[Vector2] = []
 	
 	for u_i in range(divisionNumber + 1):
 		var nominatorCache : float = normalisedBaseDenominatorCache[u_i]

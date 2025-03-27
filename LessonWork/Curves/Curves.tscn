@@ -5,19 +5,20 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="CurveDrawer" type="Line2D" parent="." node_paths=PackedStringArray("guiPanel", "weightPanel", "resetButton")]
+[node name="CurveDrawer" type="Line2D" parent="." node_paths=PackedStringArray("guiPanel", "weightPanel", "resetButton", "lengthLabel")]
 width = 2.0
 script = ExtResource("1_w0ogw")
 guiPanel = NodePath("../Panel")
 weightPanel = NodePath("../WeightPanel")
 buttonGroup = ExtResource("2_wgq70")
 resetButton = NodePath("../Panel/ResetButton")
+lengthLabel = NodePath("../Panel/Label")
 
 [node name="Panel" type="Panel" parent="."]
 offset_left = 5.0
 offset_top = 14.0
 offset_right = 215.0
-offset_bottom = 225.0
+offset_bottom = 262.0
 mouse_force_pass_scroll_events = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
@@ -85,31 +86,33 @@ text = "Rational BSpline"
 
 [node name="ResetButton" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 51.0
-offset_top = 156.0
-offset_right = 145.0
-offset_bottom = 188.0
+offset_left = 54.0
+offset_top = 200.0
+offset_right = 148.0
+offset_bottom = 232.0
 text = "Reset"
 
-[node name="HSlider" type="HSlider" parent="Panel"]
-visible = false
+[node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 15.0
-offset_top = -8.0
-offset_right = 179.0
-offset_bottom = 45.0
+offset_left = 19.0
+offset_top = 162.0
+offset_right = 109.0
+offset_bottom = 185.0
+text = "Length: 0.00"
 
 [node name="WeightPanel" type="Panel" parent="."]
 visible = false
-offset_left = 9.0
-offset_top = 234.0
-offset_right = 215.0
-offset_bottom = 400.0
+offset_left = 8.0
+offset_top = 269.0
+offset_right = 214.0
+offset_bottom = 435.0
 
 [node name="Label" type="Label" parent="WeightPanel"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 68.0
+offset_bottom = 26.0
 text = "Weights"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="WeightPanel"]
