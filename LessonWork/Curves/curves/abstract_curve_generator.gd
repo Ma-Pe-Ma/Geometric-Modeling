@@ -1,18 +1,19 @@
 class_name AbstractCurveGenerator
 
-var parameterList : Array[float] = []
-var points : Array[Vector2] = []
+var knot_points : Array[float] = []
+
+var points : Array[Vector3] = []
 var weights : Array[float] = []
 
-func _init(points : Array[Vector2]):
+func _init(points : Array[Vector3]):
 	self.points = points
 
-func generateParameterList():
+func generate_knot_points():
 	pass
 
 # generate points for polyline
-func generateDrawablePoints(divisionNumber : int = 50) -> Array[Vector2]:
+func generate_drawable_points(divisionNumber : int = 50) -> Array[Vector3]:
 	return []
 
-func setWeights(weights : Array[float]) ->void:
+func set_weights(weights : Array[float]) ->void:
 	self.weights = weights

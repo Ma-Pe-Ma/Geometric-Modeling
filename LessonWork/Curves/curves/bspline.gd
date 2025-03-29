@@ -2,44 +2,44 @@ class_name BSpline extends AbstractCurveGenerator
 
 var order : int = 3
 
-func _init(points : Array[Vector2]):
+func _init(points : Array[Vector3]):
 	super(points)
 
-func generateParameterList():
-	parameterList.clear()
+func generate_knot_points():
+	knot_points.clear()
 	
 	for i in range(points.size() + order):
-		parameterList.push_back(float(i))
+		knot_points.push_back(float(i))
 
-func generateDrawablePoints(divisionNumber : int = 50) -> Array[Vector2]:
+func generate_drawable_points(divisionNumber : int = 50) -> Array[Vector3]:
 	if points.size() < order:
 		return []
 	
-	generateParameterList()
+	generate_knot_points()
 	
-	var newDrawablePoints : Array[Vector2] = []
+	var newDrawablePoints : Array[Vector3] = []
 	
 	for u_i in range(divisionNumber + 1):
-		var step : float = (parameterList[points.size()] - parameterList[order - 1]) / divisionNumber
-		var u : float = parameterList[order - 1] + float(u_i) * step
+		var step : float = (knot_points[points.size()] - knot_points[order - 1]) / divisionNumber
+		var u : float = knot_points[order - 1] + float(u_i) * step
 		
-		var drawablePoint : Vector2 = Vector2()
+		var drawablePoint : Vector3 = Vector3()
 		
 		for pointIndex in range(points.size()):
-			drawablePoint += points[pointIndex] * generateNormalizedBSplineFunction(pointIndex, order, u)
+			drawablePoint += points[pointIndex] * gen_normalized_bspline(pointIndex, order, u)
 		
 		newDrawablePoints.push_back(drawablePoint)
 	
 	return newDrawablePoints	
 
-func generateNormalizedBSplineFunction(i : int, k : int, u : float) -> float:
+func gen_normalized_bspline(i : int, k : int, u : float) -> float:
 	if k == 1:		
-		if parameterList[i] <= u && u < parameterList[i + 1]:
+		if knot_points[i] <= u && u < knot_points[i + 1]:
 			return 1
 			
 		return 0
 	
-	var part1 : float = (u - parameterList[i]) / (parameterList[i + k - 1] - parameterList[i]) * generateNormalizedBSplineFunction(i, k - 1, u)
-	var part2 : float = (parameterList[i + k] - u) / (parameterList[i + k] - parameterList[i + 1]) * generateNormalizedBSplineFunction(i + 1, k - 1, u)
+	var part1 : float = (u - knot_points[i]) / (knot_points[i + k - 1] - knot_points[i]) * gen_normalized_bspline(i, k - 1, u)
+	var part2 : float = (knot_points[i + k] - u) / (knot_points[i + k] - knot_points[i + 1]) * gen_normalized_bspline(i + 1, k - 1, u)
 	
 	return part1 + part2

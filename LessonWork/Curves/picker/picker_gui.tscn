@@ -1,0 +1,149 @@
+[gd_scene load_steps=3 format=3 uid="uid://csdlolkghk0je"]
+
+[ext_resource type="Script" uid="uid://bbmyl56vyqcwx" path="res://picker/picker_gui.gd" id="1_mw3hd"]
+[ext_resource type="ButtonGroup" uid="uid://lvbv4w272sd2" path="res://picker/button_group.tres" id="1_u7ru6"]
+
+[node name="PickerGUI" type="Control" node_paths=PackedStringArray("gui_panel", "weight_panel", "reset_button", "length_label", "weight_container", "division_slider", "division_label")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mw3hd")
+gui_panel = NodePath("GUIControl")
+weight_panel = NodePath("WeightControl")
+button_group = ExtResource("1_u7ru6")
+reset_button = NodePath("GUIControl/ResetButton")
+length_label = NodePath("GUIControl/LengthLabel")
+weight_container = NodePath("WeightControl/ScrollContainer/VBoxContainer")
+division_slider = NodePath("GUIControl/StepContainer/HSlider")
+division_label = NodePath("GUIControl/StepContainer/Label2")
+
+[node name="GUIControl" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUIControl"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 24.0
+offset_right = 191.0
+offset_bottom = 160.0
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="GUIControl/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GUIControl/VBoxContainer/HBoxContainer1"]
+layout_mode = 2
+button_pressed = true
+button_group = ExtResource("1_u7ru6")
+
+[node name="Label" type="Label" parent="GUIControl/VBoxContainer/HBoxContainer1"]
+layout_mode = 2
+text = "Lagrange"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GUIControl/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GUIControl/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+button_group = ExtResource("1_u7ru6")
+
+[node name="Label" type="Label" parent="GUIControl/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Bezier"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="GUIControl/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GUIControl/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+button_group = ExtResource("1_u7ru6")
+
+[node name="Label" type="Label" parent="GUIControl/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "BSpline"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="GUIControl/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GUIControl/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+button_group = ExtResource("1_u7ru6")
+
+[node name="Label" type="Label" parent="GUIControl/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Rational Bezier"
+
+[node name="HBoxContaine5" type="HBoxContainer" parent="GUIControl/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="GUIControl/VBoxContainer/HBoxContaine5"]
+layout_mode = 2
+button_group = ExtResource("1_u7ru6")
+
+[node name="Label" type="Label" parent="GUIControl/VBoxContainer/HBoxContaine5"]
+layout_mode = 2
+text = "Rational BSpline"
+
+[node name="ResetButton" type="Button" parent="GUIControl"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 255.0
+offset_right = 151.0
+offset_bottom = 287.0
+text = "Reset"
+
+[node name="LengthLabel" type="Label" parent="GUIControl"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 209.0
+offset_right = 123.0
+offset_bottom = 232.0
+text = "Length: 0.00"
+
+[node name="StepContainer" type="HBoxContainer" parent="GUIControl"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 163.0
+offset_right = 213.0
+offset_bottom = 203.0
+
+[node name="Label" type="Label" parent="GUIControl/StepContainer"]
+layout_mode = 2
+text = "Step"
+
+[node name="HSlider" type="HSlider" parent="GUIControl/StepContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 10.0
+max_value = 200.0
+value = 100.0
+
+[node name="Label2" type="Label" parent="GUIControl/StepContainer"]
+layout_mode = 2
+
+[node name="WeightControl" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="WeightControl"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 272.0
+offset_right = 76.0
+offset_bottom = 295.0
+text = "Weights"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WeightControl"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 292.0
+offset_right = 206.0
+offset_bottom = 428.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WeightControl/ScrollContainer"]
+layout_mode = 2

@@ -1,53 +1,53 @@
 class_name Bezier extends AbstractCurveGenerator
 
-var binomialCoefficients : Array[int] = []
+var binomial_coefficients : Array[int] = []
 
-func _init(points : Array[Vector2]):
+func _init(points : Array[Vector3]):
 	super(points)
-	binomialCoefficients = generateBinomialCoefficients(points.size())
+	binomial_coefficients = gen_binomial_coeff(points.size())
 
-func generateDrawablePoints(divisionNumber : int = 50) -> Array[Vector2]:
-	return generateWithRecursion(divisionNumber)
-	#return generateWithBernstein(divisionNumber)
+func generate_drawable_points(divisionNumber : int = 50) -> Array[Vector3]:
+	return gen_with_recursion(divisionNumber)
+	#return gen_with_bernstein(divisionNumber)
 
-func generateWithRecursion(divisionNumber : int) -> Array[Vector2]:
-	var newDrawablePoints : Array[Vector2] = []
+func gen_with_recursion(divisionNumber : int) -> Array[Vector3]:
+	var newDrawablePoints : Array[Vector3] = []
 	
 	for i in range(divisionNumber + 1):
 		var t : float = float(i) / divisionNumber
 		
-		var resultPoints : Array[Vector2] = calculateBezierRecursivePoints(t, points)		
+		var resultPoints : Array[Vector3] = calc_bezier_recursive(t, points)		
 		newDrawablePoints.push_back(resultPoints[0])
 	
 	return newDrawablePoints
 
-func calculateBezierRecursivePoints(t : float, points : Array[Vector2]) -> Array[Vector2]:
+func calc_bezier_recursive(t : float, points : Array[Vector3]) -> Array[Vector3]:
 	if points.size() == 1:
 		return points
 	
-	var newPointSet : Array[Vector2] = []
+	var newPointSet : Array[Vector3] = []
 	
 	for index in range(1, points.size()):
-		var newPoint : Vector2 = t * points[index - 1] + (1 - t) * points[index]		
+		var newPoint : Vector3 = t * points[index - 1] + (1 - t) * points[index]		
 		newPointSet.append(newPoint)
 	
-	return calculateBezierRecursivePoints(t, newPointSet)
+	return calc_bezier_recursive(t, newPointSet)
 
-func generateWithBernstein(divisionNumber : int):
-	var newDrawablePoints : Array[Vector2] = []
+func gen_with_bernstein(divisionNumber : int):
+	var newDrawablePoints : Array[Vector3] = []
 	
 	for i in range(divisionNumber + 1):
 		var t : float = float(i) / divisionNumber
 	
-		var newPoint : Vector2 = Vector2()	
+		var newPoint : Vector3 = Vector3()	
 		for index in range(points.size()):			
-			newPoint += points[index] * binomialCoefficients[index] * (t ** index) * ((1 - t) ** (points.size() - 1 - index))
+			newPoint += points[index] * binomial_coefficients[index] * (t ** index) * ((1 - t) ** (points.size() - 1 - index))
 	
 		newDrawablePoints.push_back(newPoint)
 			
 	return newDrawablePoints
 
-func generateBinomialCoefficients(n) -> Array[int]:
+func gen_binomial_coeff(n) -> Array[int]:
 	if n == 0:
 		return [1]
 	

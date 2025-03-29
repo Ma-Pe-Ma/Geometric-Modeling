@@ -1,0 +1,241 @@
+[gd_scene load_steps=12 format=3 uid="uid://cweuo4n3x6qjf"]
+
+[ext_resource type="Script" uid="uid://b1qxg23x2xyhx" path="res://roller_coaster/play_control.gd" id="1_lelev"]
+[ext_resource type="ButtonGroup" uid="uid://bigdtfmmx6v85" path="res://roller_coaster/camera_button_group.tres" id="2_d5yhl"]
+[ext_resource type="PackedScene" uid="uid://csdlolkghk0je" path="res://picker/picker_gui.tscn" id="3_q266q"]
+[ext_resource type="Texture2D" uid="uid://b4ryhh4ipredh" path="res://roller_coaster/border.png" id="4_r4xqd"]
+[ext_resource type="Texture2D" uid="uid://busdcxwwk16vc" path="res://icon.svg" id="5_u56ix"]
+[ext_resource type="Script" uid="uid://dbrgbq8f6bwha" path="res://roller_coaster/scene_handler.gd" id="6_25mlm"]
+[ext_resource type="Script" uid="uid://d0n8a01qee6e3" path="res://picker/point_picker_3d.gd" id="7_knyx6"]
+[ext_resource type="Script" uid="uid://2iq3gp6aef3j" path="res://drawer/line_3d_drawer.gd" id="8_xhjc3"]
+[ext_resource type="Script" uid="uid://b1xjifk6rmkyb" path="res://roller_coaster/play_scene.gd" id="9_0tapj"]
+[ext_resource type="Script" uid="uid://cutshdkqm3nsw" path="res://roller_coaster/triad.gd" id="10_0mhm2"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gy47u"]
+
+[node name="RollerCoaster" type="Node3D"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TabContainer" type="TabContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 246.0
+offset_bottom = 638.0
+current_tab = 0
+
+[node name="Play" type="VBoxContainer" parent="Panel/TabContainer" node_paths=PackedStringArray("radius_slider", "angle1_slider", "angle2_slider", "step_slider", "attach_camera")]
+layout_mode = 2
+script = ExtResource("1_lelev")
+radius_slider = NodePath("CameraControls/HBoxContainer/HSlider")
+angle1_slider = NodePath("CameraControls/HBoxContainer2/HSlider")
+angle2_slider = NodePath("CameraControls/HBoxContainer3/HSlider")
+step_slider = NodePath("StepControls/HSlider")
+attach_camera = NodePath("CameraControls/HBoxContainer4/CheckButton")
+metadata/_tab_index = 0
+
+[node name="CameraControls" type="VBoxContainer" parent="Panel/TabContainer/Play"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/CameraControls"]
+layout_mode = 2
+text = "Camera controls"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Play/CameraControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer"]
+layout_mode = 2
+text = "Distance"
+
+[node name="HSlider" type="HSlider" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 50.0
+max_value = 1000.0
+value = 800.0
+scrollable = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/TabContainer/Play/CameraControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer2"]
+layout_mode = 2
+text = "Angle1"
+
+[node name="HSlider" type="HSlider" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = -180.0
+max_value = 180.0
+scrollable = false
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/TabContainer/Play/CameraControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer3"]
+layout_mode = 2
+text = "Angle2"
+
+[node name="HSlider" type="HSlider" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = -90.0
+max_value = 90.0
+scrollable = false
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/TabContainer/Play/CameraControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer4"]
+layout_mode = 2
+text = "Attach camera"
+
+[node name="CheckButton" type="CheckButton" parent="Panel/TabContainer/Play/CameraControls/HBoxContainer4"]
+layout_mode = 2
+
+[node name="StepControls" type="HBoxContainer" parent="Panel/TabContainer/Play"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Play/StepControls"]
+layout_mode = 2
+text = "Step"
+
+[node name="HSlider" type="HSlider" parent="Panel/TabContainer/Play/StepControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 50.0
+
+[node name="Edit" type="VBoxContainer" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Edit"]
+layout_mode = 2
+text = "Camera"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/Edit"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Edit/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+button_group = ExtResource("2_d5yhl")
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "XY"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/TabContainer/Edit/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+button_group = ExtResource("2_d5yhl")
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "ZX"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/TabContainer/Edit/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+button_group = ExtResource("2_d5yhl")
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Edit/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "YZ"
+
+[node name="Picker" parent="Panel/TabContainer/Edit" instance=ExtResource("3_q266q")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_gy47u")
+
+[node name="Sprites" type="Node" parent="."]
+
+[node name="Sprite3DXY" type="Sprite3D" parent="Sprites"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 1, 0, 0, -400)
+texture = ExtResource("4_r4xqd")
+
+[node name="Sprite3DYZ" type="Sprite3D" parent="Sprites"]
+transform = Transform3D(-4.37114e-06, 0, 1, 0, 100, 0, -100, 0, -4.37114e-08, -400, 0, 0)
+texture = ExtResource("4_r4xqd")
+
+[node name="Sprite3DZX" type="Sprite3D" parent="Sprites"]
+transform = Transform3D(100, 0, 0, 0, -4.37114e-06, -1, 0, 100, -4.37114e-08, 0, -400, 0)
+texture = ExtResource("4_r4xqd")
+
+[node name="Cameras" type="Node" parent="."]
+
+[node name="CameraXY" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 400)
+projection = 1
+size = 800.0
+
+[node name="CameraZX" type="Camera3D" parent="Cameras"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, 1, 1, 4.37114e-08, -4.37114e-08, 0, 400, 0)
+projection = 1
+size = 800.0
+
+[node name="CameraYZ" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 400, 0, 0)
+projection = 1
+size = 800.0
+
+[node name="Camera3D" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 148, 0, 792)
+current = true
+
+[node name="MarkerDummy" type="Node3D" parent="."]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="MarkerDummy"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 1, 0, 0, 12)
+texture = ExtResource("5_u56ix")
+
+[node name="Sprite3D2" type="Sprite3D" parent="MarkerDummy"]
+transform = Transform3D(-8.74228e-07, 0, 1, 0, 20, 0, -20, 0, -4.37114e-08, 12, 0, 0)
+texture = ExtResource("5_u56ix")
+
+[node name="Sprite3D3" type="Sprite3D" parent="MarkerDummy"]
+transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -1, 0, 20, -4.37114e-08, 0, 12, 0)
+texture = ExtResource("5_u56ix")
+
+[node name="SceneHandler" type="Node" parent="." node_paths=PackedStringArray("tab_container", "point_picker", "play_scene")]
+script = ExtResource("6_25mlm")
+tab_container = NodePath("../Panel/TabContainer")
+point_picker = NodePath("PointPicker")
+play_scene = NodePath("PlayScene")
+
+[node name="PointPicker" type="Node" parent="SceneHandler" node_paths=PackedStringArray("cameraXY", "cameraZX", "cameraYZ", "marker3DDummy", "picker_gui", "abstract_line_drawer")]
+script = ExtResource("7_knyx6")
+camera_button_group = ExtResource("2_d5yhl")
+cameraXY = NodePath("../../Cameras/CameraXY")
+cameraZX = NodePath("../../Cameras/CameraZX")
+cameraYZ = NodePath("../../Cameras/CameraYZ")
+marker3DDummy = NodePath("../../MarkerDummy")
+picker_gui = NodePath("../../Panel/TabContainer/Edit/Picker")
+abstract_line_drawer = NodePath("../LineDrawer")
+
+[node name="LineDrawer" type="Node" parent="SceneHandler"]
+script = ExtResource("8_xhjc3")
+
+[node name="PlayScene" type="Node" parent="SceneHandler" node_paths=PackedStringArray("camera3D", "play_control", "triad", "point_picker")]
+script = ExtResource("9_0tapj")
+camera3D = NodePath("../../Cameras/Camera3D")
+play_control = NodePath("../../Panel/TabContainer/Play")
+triad = NodePath("Triad")
+point_picker = NodePath("../PointPicker")
+
+[node name="Triad" type="Node3D" parent="SceneHandler/PlayScene"]
+script = ExtResource("10_0mhm2")
