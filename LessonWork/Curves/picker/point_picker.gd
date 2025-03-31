@@ -15,7 +15,7 @@ var basis_list : Array[Basis] = []
 func _ready():
 	# clear points
 	self.picker_gui.reset_button.pressed.connect(func ():
-		self.picker_gui.lengthLabel.text = "Length: %.2f" % 0
+		self.picker_gui.length_label.text = "Length: %.2f" % 0
 		
 		for child in get_children():
 			child.queue_free()

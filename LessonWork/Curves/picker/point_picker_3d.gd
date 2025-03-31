@@ -6,7 +6,9 @@ class_name PointPicker3D extends PointPicker
 @export var cameraZX : Camera3D;
 @export var cameraYZ : Camera3D;
 
-@export var marker3DDummy : Node3D; 
+@export var marker3DDummy : Node3D;
+
+@export var perspective_button : CheckButton;
 
 var camera_id : int = 0
 var cameras : Array[Camera3D] = []
@@ -20,9 +22,14 @@ func _ready() -> void:
 			self.camera_id = camera_button_group.get_buttons().find(camera_button_group.get_pressed_button())
 			self.activate_camera()
 		)
+		
+	perspective_button.toggled.connect(func(on : bool):
+		self.cameras[self.camera_id].projection = Camera3D.PROJECTION_PERSPECTIVE if on else Camera3D.PROJECTION_ORTHOGONAL
+	)
 
 func activate_camera() -> void:
 	self.cameras[self.camera_id].make_current()
+	self.cameras[self.camera_id].projection = Camera3D.PROJECTION_PERSPECTIVE if perspective_button.button_pressed else Camera3D.PROJECTION_ORTHOGONAL
 
 func get_control_points() -> Array[Vector3]:
 	var controlPoints : Array[Vector3] = []	

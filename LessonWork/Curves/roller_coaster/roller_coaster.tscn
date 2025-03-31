@@ -157,6 +157,16 @@ button_group = ExtResource("2_d5yhl")
 layout_mode = 2
 text = "YZ"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Edit"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Edit/HBoxContainer"]
+layout_mode = 2
+text = "Persp"
+
+[node name="CheckButton" type="CheckButton" parent="Panel/TabContainer/Edit/HBoxContainer"]
+layout_mode = 2
+
 [node name="Picker" parent="Panel/TabContainer/Edit" instance=ExtResource("3_q266q")]
 layout_mode = 2
 button_group = SubResource("ButtonGroup_gy47u")
@@ -217,13 +227,14 @@ tab_container = NodePath("../Panel/TabContainer")
 point_picker = NodePath("PointPicker")
 play_scene = NodePath("PlayScene")
 
-[node name="PointPicker" type="Node" parent="SceneHandler" node_paths=PackedStringArray("cameraXY", "cameraZX", "cameraYZ", "marker3DDummy", "picker_gui", "abstract_line_drawer")]
+[node name="PointPicker" type="Node" parent="SceneHandler" node_paths=PackedStringArray("cameraXY", "cameraZX", "cameraYZ", "marker3DDummy", "perspective_button", "picker_gui", "abstract_line_drawer")]
 script = ExtResource("7_knyx6")
 camera_button_group = ExtResource("2_d5yhl")
 cameraXY = NodePath("../../Cameras/CameraXY")
 cameraZX = NodePath("../../Cameras/CameraZX")
 cameraYZ = NodePath("../../Cameras/CameraYZ")
 marker3DDummy = NodePath("../../MarkerDummy")
+perspective_button = NodePath("../../Panel/TabContainer/Edit/HBoxContainer/CheckButton")
 picker_gui = NodePath("../../Panel/TabContainer/Edit/Picker")
 abstract_line_drawer = NodePath("../LineDrawer")
 
