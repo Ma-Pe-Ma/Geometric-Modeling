@@ -109,7 +109,9 @@ text = "Step"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+min_value = 2.0
 max_value = 50.0
+value = 2.0
 
 [node name="Edit" type="VBoxContainer" parent="Panel/TabContainer"]
 visible = false

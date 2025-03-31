@@ -90,11 +90,11 @@ func draw_current_curve(division : int = 50) -> void:
 	self.weights = self.get_weights()
 	current_curve.set_weights(self.weights)
 	self.drawable_points = current_curve.generate_drawable_points(picker_gui.division_slider.value)
-	self.generate_triad()
 	
 	var length : float = 0
 		
 	if self.drawable_points.size() > 0:
+		self.generate_triad()
 		abstract_line_drawer.draw_points(self.drawable_points)
 		length = abstract_line_drawer.get_length()
 
@@ -147,16 +147,21 @@ func generate_triad():
 	basis_list.push_back(Basis())
 	basis_list.push_back(Basis())
 	
-	var previous_tangent = drawable_points[1] - drawable_points[0]
-	
 	if drawable_points.size() > 2:
+		var previous_tangent = drawable_points[1] - drawable_points[0]
+		
 		for index in range(2, drawable_points.size()):
 			var current_tangent : Vector3 = (drawable_points[index] - drawable_points[index - 1]).normalized()			
 			var tangent_diff : Vector3 = current_tangent - previous_tangent
-			var current_binormal : Vector3 = current_tangent.cross(tangent_diff).normalized()			
-			var current_normal : Vector3 = current_binormal.cross(current_tangent).normalized()			
 			
-			basis_list.push_back(Basis(current_tangent, current_normal, current_binormal))
+			# case when the curve is a line, use the previous triad
+			if tangent_diff.length() < 0.001:
+				basis_list.push_back(Basis(current_tangent, basis_list[index - 1].y, basis_list[index - 1].z))
+			# otherwise calculate it
+			else:
+				var current_binormal : Vector3 = current_tangent.cross(tangent_diff).normalized()
+				var current_normal : Vector3 = current_binormal.cross(current_tangent).normalized()
+				basis_list.push_back(Basis(current_tangent, current_normal, current_binormal))
 			
 			previous_tangent = current_tangent
 
